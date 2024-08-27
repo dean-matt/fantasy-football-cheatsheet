@@ -9,7 +9,7 @@ const App = () => {
     <>
       <CssBaseline />
       <Box sx={{ height: 1, position: 'relative', width: 1 }}>
-        <Stack direction='column'>
+        <Stack direction='column' sx={{ height: 1, position: 'relative', width: 1 }}>
           <Header />
           <Body />
         </Stack>

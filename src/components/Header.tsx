@@ -8,7 +8,7 @@ import { memo } from 'react'
 
 const Header = () => {
   return (
-    <AppBar position='static'>
+    <AppBar position='static' sx={{ zIndex: 1000 }}>
       <Toolbar>
         <IconButton size='large' edge='start' color='inherit' aria-label='menu' sx={{ mr: 2 }}>
           <Menu />
