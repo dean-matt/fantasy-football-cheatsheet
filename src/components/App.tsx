@@ -1,11 +1,16 @@
+import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import Stack from '@mui/material/Stack'
+import Header from './Header'
 
 const App = () => {
   return (
     <>
-      <Box>
-        <Typography>Hello World</Typography>
+      <CssBaseline />
+      <Box sx={{ height: 1, position: 'relative', width: 1 }}>
+        <Stack direction='column'>
+          <Header />
+        </Stack>
       </Box>
     </>
   )

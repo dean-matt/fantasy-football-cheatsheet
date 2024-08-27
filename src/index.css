@@ -1,0 +1,13 @@
+body {
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+}
+
+#root {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
