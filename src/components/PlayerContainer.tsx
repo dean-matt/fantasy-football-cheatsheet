@@ -1,9 +1,8 @@
-import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
 import { memo } from 'react'
 import { Player } from './models'
-import PlayerText from './PlayerText'
+import PlayerCheckbox from './PlayerCheckbox'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 
@@ -15,18 +14,18 @@ interface Props {
 const PlayerContainer = (props: Props) => {
   return (
     <Stack sx={{ position: 'relative', p: 1 }}>
-      <Paper elevation={5} sx={{ px: 2 }}>
-        <Stack sx={{ backgroundColor: 'background.paper', position: 'sticky', top: 0, zIndex: 2 }}>
+      <Paper elevation={5} sx={{ px: 1 }}>
+        <Stack sx={{ backgroundColor: 'background.paper', pb: 1, px: 1, position: 'sticky', top: 0, zIndex: 2 }}>
           <Typography component='h5' sx={{ pb: 1, pt: 1.5 }} variant='h5'>
             {props.position}
           </Typography>
           <Divider />
         </Stack>
-        <Box>
+        <Stack spacing={1} px={1}>
           {props.players.map((p) => (
-            <PlayerText data={p} />
+            <PlayerCheckbox data={p} />
           ))}
-        </Box>
+        </Stack>
       </Paper>
     </Stack>
   )
