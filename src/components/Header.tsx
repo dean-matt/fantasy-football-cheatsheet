@@ -16,7 +16,7 @@ const Header = () => {
         <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
           News
         </Typography>
-        <Button color='inherit'>Hi Will!</Button>
+        <Button color='inherit'>High Will!</Button>
       </Toolbar>
     </AppBar>
   )
