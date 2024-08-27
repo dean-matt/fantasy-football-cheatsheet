@@ -11,17 +11,20 @@ interface Props {
   players: Player[]
 }
 
+const SPACING = 1
+const PADDING = 2
+
 const PlayerContainer = (props: Props) => {
   return (
-    <Stack sx={{ position: 'relative', p: 1 }}>
-      <Paper elevation={5} sx={{ px: 1 }}>
-        <Stack sx={{ backgroundColor: 'background.paper', pb: 1, px: 1, position: 'sticky', top: 0, zIndex: 2 }}>
+    <Stack sx={{ position: 'relative', p: PADDING }}>
+      <Paper elevation={5}>
+        <Stack sx={{ backgroundColor: 'background.paper', px: PADDING, position: 'sticky', top: 0, zIndex: 2 }}>
           <Typography component='h5' sx={{ pb: 1, pt: 1.5 }} variant='h5'>
             {props.position}
           </Typography>
           <Divider />
         </Stack>
-        <Stack spacing={1} px={1}>
+        <Stack spacing={SPACING} pb={PADDING} pt={SPACING} px={PADDING}>
           {props.players.map((p) => (
             <PlayerCheckbox data={p} />
           ))}
