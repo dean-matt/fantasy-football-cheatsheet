@@ -1,4 +1,3 @@
-import Stack from '@mui/material/Stack'
 import PlayerContainer from './PlayerContainer'
 import { memo, useMemo } from 'react'
 import playerData from '../../public/player-data.json'
@@ -25,13 +24,13 @@ const Body = () => {
   }, [data])
 
   return (
-    <Stack flexGrow={1} sx={{ height: 1, px: 2, position: 'relative' }}>
-      <Box sx={{ height: 1, overflowY: 'scroll' }}>
+    <Box flexBasis={0} flexShrink={0} flexGrow={1} sx={{ position: 'relative' }}>
+      <Box sx={{ height: 1, overflowY: 'scroll', px: 1, position: 'absolute', width: 1 }}>
         {filteredData.map((c) => (
           <PlayerContainer position={c.position} players={c.players} />
         ))}
       </Box>
-    </Stack>
+    </Box>
   )
 }
 
