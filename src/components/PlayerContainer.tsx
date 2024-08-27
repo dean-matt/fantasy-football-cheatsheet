@@ -2,23 +2,30 @@ import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardHeader from '@mui/material/CardHeader'
+import Checkbox from '@mui/material/Checkbox'
 import Divider from '@mui/material/Divider'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormGroup from '@mui/material/FormGroup'
 import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
 import { memo } from 'react'
+import { Player } from './models'
 
-const PlayerContainer = () => {
+interface Props {
+  position: string
+  players: Player[]
+}
+
+const PlayerContainer = (props: Props) => {
   return (
     <Stack>
       <Card>
-        <CardHeader title='Hi Jimmy!' />
+        <CardHeader title={props.position} />
         <CardContent sx={{ pt: 0 }}>
           <Divider />
           <Box sx={{ pt: 2 }}>
-            <Typography>
-              This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup
-              of frozen peas along with the mussels, if you like.
-            </Typography>
+            <FormGroup>
+              <FormControlLabel control={<Checkbox defaultChecked />} label='Label' />
+            </FormGroup>
           </Box>
         </CardContent>
       </Card>

@@ -5,7 +5,7 @@ import { memo } from 'react'
 const Body = () => {
   return (
     <Stack sx={{ p: 2 }}>
-      <PlayerContainer />
+      <PlayerContainer position='QB' players={[]} />
     </Stack>
   )
 }
