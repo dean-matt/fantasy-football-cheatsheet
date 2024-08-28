@@ -1,36 +1,51 @@
 import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
 import { memo } from 'react'
-import { Player } from './models'
+import { PlayerPositionCollection } from './models'
 import PlayerCheckbox from './PlayerCheckbox'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
+import Box from '@mui/material/Box'
 
 interface Props {
-  position: string
-  players: Player[]
+  data: PlayerPositionCollection
 }
 
 const SPACING = 1
-const PADDING = 2
+const PADDING = 1
 
 const PlayerContainer = (props: Props) => {
   return (
-    <Stack sx={{ position: 'relative', p: PADDING }}>
-      <Paper elevation={5}>
-        <Stack sx={{ backgroundColor: 'background.paper', px: PADDING, position: 'sticky', top: 0, zIndex: 2 }}>
-          <Typography component='h5' sx={{ pb: 1, pt: 1.5 }} variant='h5'>
-            {props.position}
-          </Typography>
-          <Divider />
-        </Stack>
-        <Stack spacing={SPACING} pb={PADDING} pt={SPACING} px={PADDING}>
-          {props.players.map((p) => (
-            <PlayerCheckbox data={p} />
-          ))}
+    <Box flexGrow={1} height={1} position='relative' width={1}>
+      <Paper elevation={3} sx={{ height: 1, position: 'absolute', width: 1 }}>
+        <Stack height={1}>
+          <Stack
+            sx={{
+              backgroundColor: 'background.paper',
+              borderRadius: 1,
+              px: PADDING,
+              position: 'sticky',
+              top: 0,
+              zIndex: 2,
+            }}
+          >
+            <Typography component='h6' sx={{ pt: 0.5 }} variant='h6'>
+              {props.data.position}
+            </Typography>
+            <Divider />
+          </Stack>
+          <Box flexGrow={1} overflow='hidden' mb={PADDING} position='relative' mt={SPACING} mx={PADDING}>
+            <Stack height={1} position='absolute' spacing={SPACING} sx={{ overflowY: 'scroll' }} width={1}>
+              {props.data.players.map((p) => (
+                <Box position='relative' width={1}>
+                  <PlayerCheckbox data={p} key={p.rank} />
+                </Box>
+              ))}
+            </Stack>
+          </Box>
         </Stack>
       </Paper>
-    </Stack>
+    </Box>
   )
 }
 
