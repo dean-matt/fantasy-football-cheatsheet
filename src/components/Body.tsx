@@ -5,6 +5,7 @@ import { Player, PlayerPositionCollection } from './models'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 
+const SPACING = 1
 const TILES_PER_COLUMN = 2
 
 const Body = () => {
@@ -26,10 +27,10 @@ const Body = () => {
     const stage_2: PlayerPositionCollection[][] = []
 
     stage_1.forEach((data, index) => {
-      if (index % TILES_PER_COLUMN === 0 || !stage_2[index]) {
+      if (index % TILES_PER_COLUMN === 0) {
         stage_2.push([data])
       } else {
-        stage_2[index].push(data)
+        stage_2[stage_2.length - 1].push(data)
       }
     })
 
@@ -39,10 +40,10 @@ const Body = () => {
   return (
     <Box flexBasis={0} flexShrink={0} flexGrow={1} sx={{ position: 'relative' }}>
       <Box sx={{ backgroundColor: 'grey.200', height: 1, p: 1, position: 'absolute', width: 1 }}>
-        <Stack direction='row' height={1} position='relative' spacing={1} width={1}>
+        <Stack direction='row' height={1} position='relative' spacing={SPACING} width={1}>
           {filteredData.map((column, index) => {
             return (
-              <Stack flexGrow={1} key={index}>
+              <Stack flexGrow={1} key={index} spacing={SPACING}>
                 {column.map((data) => (
                   <PlayerContainer data={data} key={data.position} />
                 ))}
