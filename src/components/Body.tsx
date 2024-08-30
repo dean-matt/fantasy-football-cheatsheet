@@ -26,8 +26,6 @@ const Body = () => {
   const filteredData: PlayerPositionCollection[][] = useMemo(() => {
     const stage_1: PlayerPositionCollection[] = []
 
-    console.log('test')
-
     data.forEach((p) => {
       const foundCollection = stage_1.find((c) => c.position === p.pos)
 
