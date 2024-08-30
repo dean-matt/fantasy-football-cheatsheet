@@ -4,12 +4,24 @@ import playerData from '../../public/player-data.json'
 import { Player, PlayerPositionCollection } from './models'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { Theme } from '@mui/material/styles'
 
 const SPACING = 1
-const TILES_PER_COLUMN = 2
+const DEFAULT_TILES_PER_ROW = 3
+const MEDIUM_TILES_PER_ROW = 2
+const SMALLEST_TILES_PER_ROW = 1
 
 const Body = () => {
+  const smallestTilePerRow = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
+  const mediumTilesPerRow = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
   const data = playerData as Player[]
+
+  const tilesPerRow = useMemo(() => {
+    if (smallestTilePerRow) return SMALLEST_TILES_PER_ROW
+    else if (mediumTilesPerRow) return MEDIUM_TILES_PER_ROW
+    else return DEFAULT_TILES_PER_ROW
+  }, [mediumTilesPerRow, smallestTilePerRow])
 
   const filteredData: PlayerPositionCollection[][] = useMemo(() => {
     const stage_1: PlayerPositionCollection[] = []
@@ -27,7 +39,7 @@ const Body = () => {
     const stage_2: PlayerPositionCollection[][] = []
 
     stage_1.forEach((data, index) => {
-      if (index % TILES_PER_COLUMN === 0) {
+      if (index % tilesPerRow === 0) {
         stage_2.push([data])
       } else {
         stage_2[stage_2.length - 1].push(data)
@@ -35,15 +47,15 @@ const Body = () => {
     })
 
     return stage_2
-  }, [data])
+  }, [data, tilesPerRow])
 
   return (
     <Box flexBasis={0} flexShrink={0} flexGrow={1} sx={{ position: 'relative' }}>
       <Box sx={{ backgroundColor: 'grey.200', height: 1, p: 1, position: 'absolute', width: 1 }}>
-        <Stack direction='row' height={1} position='relative' spacing={SPACING} width={1}>
+        <Stack height={1} position='relative' spacing={SPACING} width={1}>
           {filteredData.map((column, index) => {
             return (
-              <Stack flexGrow={1} key={index} spacing={SPACING}>
+              <Stack direction='row' flexGrow={1} key={index} spacing={SPACING}>
                 {column.map((data) => (
                   <PlayerContainer data={data} key={data.position} />
                 ))}

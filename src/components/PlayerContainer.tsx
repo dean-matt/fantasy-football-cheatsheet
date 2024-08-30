@@ -37,7 +37,7 @@ const PlayerContainer = (props: Props) => {
           <Box flexGrow={1} overflow='hidden' mb={PADDING} position='relative' mt={SPACING} mx={PADDING}>
             <Stack height={1} position='absolute' spacing={SPACING} sx={{ overflowY: 'scroll' }} width={1}>
               {props.data.players.map((p) => (
-                <Box position='relative' width={1}>
+                <Box key={p.rank} position='relative' width={1}>
                   <PlayerCheckbox data={p} key={p.rank} />
                 </Box>
               ))}
