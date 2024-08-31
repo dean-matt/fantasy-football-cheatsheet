@@ -1,6 +1,6 @@
 import PlayerContainer from './PlayerContainer'
 import { memo, useMemo } from 'react'
-import playerData from '../../public/player-data.json'
+import playerData from '../assets/player-data.json'
 import { Player, PlayerPositionCollection } from './models'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
