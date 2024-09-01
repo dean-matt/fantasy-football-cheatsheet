@@ -52,7 +52,7 @@ export const selectPositions = createSelector([selectPlayers], (players) => {
     positions.push(player.position)
   })
 
-  return positions.sort()
+  return positions.sort((a, b) => b.localeCompare(a))
 })
 
 export default playersSlice.reducer
