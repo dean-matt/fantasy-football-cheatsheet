@@ -4,21 +4,21 @@ import PlayerItem from './PlayerItem'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import { useAppSelector } from '../redux/hooks'
-import { selectPlayersWithPosition } from '../redux/playersSlice'
+import { selectPlayers, selectPlayersWithPosition } from '../redux/playersSlice'
 import PositionDropdown from './PositionDropdown'
 
 const SPACING = 1
 const PADDING = 1
 
 interface Props {
-  initialPosition: string
+  initialPosition?: string
 }
 
 const PlayersBox = ({ initialPosition }: Props) => {
-  const [position, setPosition] = useState<string>(initialPosition)
-  const players = useAppSelector(selectPlayersWithPosition(position))
+  const [position, setPosition] = useState<string | undefined>(initialPosition)
+  const players = useAppSelector(position ? selectPlayersWithPosition(position) : selectPlayers)
 
-  const handlePositionChanged = useCallback((position: string) => {
+  const handlePositionChanged = useCallback((position?: string) => {
     setPosition(position)
   }, [])
 

@@ -37,10 +37,12 @@ export const playersSlice = createSlice({
 
 export const { togglePlayerDrafted, setValues } = playersSlice.actions
 
-const selectPlayers = (state: RootState) => state.players.values
+export const selectPlayers = (state: RootState) => state.players.values
 
 export const selectPlayersWithPosition = (position: string) =>
-  createSelector([selectPlayers], (players) => players.filter((player) => player.position === position))
+  createSelector([selectPlayers], (players) => {
+    return players.filter((player) => player.position === position)
+  })
 
 export const selectPositions = createSelector([selectPlayers], (players) => {
   const positions: string[] = []
