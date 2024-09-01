@@ -29,7 +29,13 @@ const PositionDropdown = ({ initialValue, onChange }: Props) => {
   return (
     <FormControl fullWidth size={'small'} variant={'standard'}>
       <InputLabel id='position-selector'>Position</InputLabel>
-      <Select id='position-selector' label='Position' onChange={handlePositionChanged} value={value}>
+      <Select
+        id='position-selector'
+        label='Position'
+        onChange={handlePositionChanged}
+        sx={{ '& .MuiInputBase-input': { pl: 2 } }}
+        value={value}
+      >
         <MenuItem value={UNDEFINED_VALUE}>{UNDEFINED_VALUE}</MenuItem>
         {values.map((position) => (
           <MenuItem key={position} value={position}>
