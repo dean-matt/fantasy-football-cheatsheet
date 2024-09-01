@@ -31,6 +31,8 @@ export const selectPositions = (state: RootState) => {
     if (positions.find((value) => value === player.pos)) return
     positions.push(player.pos)
   })
+
+  return positions
 }
 
 export default playersSlice.reducer
