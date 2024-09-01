@@ -28,7 +28,6 @@ const PositionDropdown = ({ initialValue, onChange }: Props) => {
 
   return (
     <FormControl fullWidth size={'small'} variant={'standard'}>
-      <InputLabel id='position-selector'>Position</InputLabel>
       <Select
         id='position-selector'
         label='Position'

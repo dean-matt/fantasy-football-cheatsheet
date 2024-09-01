@@ -6,6 +6,8 @@ import Box from '@mui/material/Box'
 import { useAppDispatch } from '../redux/hooks'
 import { togglePlayerDrafted } from '../redux/playersSlice'
 
+const FONT_SIZE = 14
+
 interface Props {
   player: Player
 }
@@ -22,11 +24,14 @@ const PlayerItem = ({ player }: Props) => {
       color={player.drafted ? 'inherit' : 'info'}
       fullWidth
       onClick={handleClick}
-      sx={{ justifyContent: 'left', position: 'relative' }}
+      size={'small'}
+      sx={{ justifyContent: 'left', p: 0.5, position: 'relative' }}
       variant='contained'
     >
-      <Typography sx={{ pr: 1 }}>{player.rank})</Typography>
-      <Typography>{player.playerTeamBye}</Typography>
+      <Typography fontSize={FONT_SIZE} sx={{ pr: 1 }}>
+        {player.rank})
+      </Typography>
+      <Typography fontSize={FONT_SIZE}>{player.playerTeamBye}</Typography>
       {player.drafted && (
         <Box sx={{ height: 1, left: 0, position: 'absolute', width: 1 }}>
           <Box sx={{ height: 1, px: 1, position: 'relative', width: 1 }}>

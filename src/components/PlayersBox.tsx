@@ -7,7 +7,7 @@ import { useAppSelector } from '../redux/hooks'
 import { selectPlayers, selectPlayersWithPosition } from '../redux/playersSlice'
 import PositionDropdown from './PositionDropdown'
 
-const SPACING = 1
+const SPACING = 0.5
 const PADDING = 1
 
 interface Props {
