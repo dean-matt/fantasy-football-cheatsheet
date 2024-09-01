@@ -1,5 +1,5 @@
 export interface Player {
-  drafted: boolean
+  drafted?: boolean
   rank: number
   playerTeamBye: string
   position: string
