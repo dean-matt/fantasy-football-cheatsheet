@@ -1,17 +1,17 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from './store'
-import { FilteredPlayers, Player } from '../models'
+import { Player } from '../models'
 import { sortPlayers } from '../helpers/sorting'
 
 // Define a type for the slice state
 interface PlayersState {
-  filteredValues: FilteredPlayers[]
+  filteredValues: { [position: string]: Player[] | undefined }
   values: Player[]
 }
 
 // Define the initial state using that type
 const initialState: PlayersState = {
-  filteredValues: [],
+  filteredValues: {},
   values: [],
 }
 
@@ -26,19 +26,14 @@ export const playersSlice = createSlice({
       const positions = selectPositions({ players: state })
 
       positions.forEach((position) => {
-        state.filteredValues.push({
-          position,
-          players: sortPlayers(filterPlayersWithPosition(position)({ players: state })),
-        })
+        state.filteredValues[position] = sortPlayers(filterPlayersWithPosition(position)({ players: state }))
       })
     },
     togglePlayerDrafted: (state, action: PayloadAction<Player>) => {
       const comparer = (p: Player) => p.playerTeamBye === action.payload.playerTeamBye && p.rank === action.payload.rank
 
       const player = state.values.find(comparer)
-      const filteredPlayer = state.filteredValues
-        .find((filtered) => filtered.position === player?.position)
-        ?.players?.find(comparer)
+      const filteredPlayer = state.filteredValues[action.payload.position]?.find(comparer)
 
       if (player) {
         player.drafted = !player.drafted
@@ -63,10 +58,7 @@ const filterPlayersWithPosition = (position: string) =>
   })
 
 export const selectPlayersWithPosition = (position: string) =>
-  createSelector(
-    [selectFilteredPlayers],
-    (filteredPlayers) => filteredPlayers.find((filtered) => filtered.position === position)?.players
-  )
+  createSelector([selectFilteredPlayers], (filteredPlayers) => filteredPlayers[position])
 
 export const selectPositions = createSelector([selectPlayers], (players) => {
   const positions: string[] = []
