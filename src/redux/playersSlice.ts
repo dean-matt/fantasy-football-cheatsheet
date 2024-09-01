@@ -1,6 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from './store'
 import { Player } from '../models'
+import { sortPlayers } from '../helpers/sorting'
 
 // Define a type for the slice state
 interface PlayersState {
@@ -18,6 +19,7 @@ export const playersSlice = createSlice({
   reducers: {
     setValues: (state, action: PayloadAction<Player[]>) => {
       state.values = action.payload
+      state.values = sortPlayers(state.values)
     },
     togglePlayerDrafted: (state, action: PayloadAction<Player>) => {
       const player = state.values.find(
@@ -27,21 +29,23 @@ export const playersSlice = createSlice({
       if (player) {
         player.drafted = !player.drafted
       }
+
+      state.values = sortPlayers(state.values)
     },
   },
 })
 
 export const { togglePlayerDrafted, setValues } = playersSlice.actions
 
-export const selectPlayers = (state: RootState) => state.players
+const selectPlayers = (state: RootState) => state.players.values
 
 export const selectPlayersWithPosition = (position: string) =>
-  createSelector([selectPlayers], (players) => players.values.filter((player) => player.position === position))
+  createSelector([selectPlayers], (players) => players.filter((player) => player.position === position))
 
 export const selectPositions = createSelector([selectPlayers], (players) => {
   const positions: string[] = []
 
-  players.values.forEach((player) => {
+  players.forEach((player) => {
     if (positions.find((value) => value === player.position)) return
     positions.push(player.position)
   })
