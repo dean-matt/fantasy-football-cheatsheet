@@ -1,19 +1,26 @@
-import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
-import { memo } from 'react'
+import { memo, useCallback, useState } from 'react'
 import PlayerItem from './PlayerItem'
-import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import { useAppSelector } from '../redux/hooks'
 import { selectPlayersWithPosition } from '../redux/playersSlice'
+import PositionDropdown from './PositionDropdown'
 
 const SPACING = 1
 const PADDING = 1
 
-const PlayersBox = () => {
-  const position = 'QB'
+interface Props {
+  initialPosition: string
+}
+
+const PlayersBox = ({ initialPosition }: Props) => {
+  const [position, setPosition] = useState<string>(initialPosition)
   const players = useAppSelector(selectPlayersWithPosition(position))
+
+  const handlePositionChanged = useCallback((position: string) => {
+    setPosition(position)
+  }, [])
 
   return (
     <Box flexGrow={1} height={1} position='relative' width={1}>
@@ -23,16 +30,14 @@ const PlayersBox = () => {
             sx={{
               backgroundColor: 'background.paper',
               borderRadius: 1,
-              px: PADDING,
               position: 'sticky',
               top: 0,
               zIndex: 2,
             }}
           >
-            <Typography component='h6' sx={{ pt: 0.5 }} variant='h6'>
-              {position}
-            </Typography>
-            <Divider />
+            <Box sx={{ pt: PADDING, px: PADDING }}>
+              <PositionDropdown initialValue={initialPosition} onChange={handlePositionChanged} />
+            </Box>
           </Stack>
           <Box flexGrow={1} overflow='hidden' mb={PADDING} position='relative' mt={SPACING} mx={PADDING}>
             <Stack height={1} position='absolute' spacing={SPACING} sx={{ overflowY: 'scroll' }} width={1}>
