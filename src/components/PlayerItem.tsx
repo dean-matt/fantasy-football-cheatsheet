@@ -19,7 +19,7 @@ const PlayerItem = ({ player }: Props) => {
 
   return (
     <Button
-      color={player.drafted ? 'error' : 'success'}
+      color={player.drafted ? 'inherit' : 'info'}
       fullWidth
       onClick={handleClick}
       sx={{ justifyContent: 'left', position: 'relative' }}
@@ -30,7 +30,7 @@ const PlayerItem = ({ player }: Props) => {
       {player.drafted && (
         <Box sx={{ height: 1, left: 0, position: 'absolute', width: 1 }}>
           <Box sx={{ height: 1, px: 1, position: 'relative', width: 1 }}>
-            <Box sx={{ backgroundColor: '#ffffff88', height: '2px', position: 'relative', top: '50%', width: 1 }} />
+            <Box sx={{ backgroundColor: 'grey.900', height: '2px', position: 'relative', top: '50%', width: 1 }} />
           </Box>
         </Box>
       )}

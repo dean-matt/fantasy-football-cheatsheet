@@ -10,13 +10,7 @@ import { useEffect } from 'react'
 import { useAppDispatch } from '../redux/hooks'
 import { setValues } from '../redux/playersSlice'
 
-const theme = createTheme({
-  palette: {
-    success: {
-      main: '#25d231',
-    },
-  },
-})
+const theme = createTheme({})
 
 const App = () => {
   const dispatch = useAppDispatch()
