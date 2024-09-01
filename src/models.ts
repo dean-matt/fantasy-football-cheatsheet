@@ -4,8 +4,3 @@ export interface Player {
   playerTeamBye: string
   position: string
 }
-
-export interface PlayerPositionCollection {
-  position: string
-  players: Player[]
-}

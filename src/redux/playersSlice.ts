@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from './store'
 import { Player } from '../models'
 
@@ -33,18 +33,20 @@ export const playersSlice = createSlice({
 
 export const { togglePlayerDrafted, setValues } = playersSlice.actions
 
-export const selectPlayersWithPosition = (position: string) => (state: RootState) =>
-  state.players.values.filter((player) => player.position === position)
+export const selectPlayers = (state: RootState) => state.players
 
-export const selectPositions = (state: RootState) => {
+export const selectPlayersWithPosition = (position: string) =>
+  createSelector([selectPlayers], (players) => players.values.filter((player) => player.position === position))
+
+export const selectPositions = createSelector([selectPlayers], (players) => {
   const positions: string[] = []
 
-  state.players.values.forEach((player) => {
+  players.values.forEach((player) => {
     if (positions.find((value) => value === player.position)) return
     positions.push(player.position)
   })
 
   return positions
-}
+})
 
 export default playersSlice.reducer

@@ -1,20 +1,20 @@
 import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
 import { memo } from 'react'
-import { PlayerPositionCollection } from '../models'
 import PlayerCheckbox from './PlayerCheckbox'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
-
-interface Props {
-  data: PlayerPositionCollection
-}
+import { useAppSelector } from '../redux/hooks'
+import { selectPlayersWithPosition } from '../redux/playersSlice'
 
 const SPACING = 1
 const PADDING = 1
 
-const PlayerContainer = (props: Props) => {
+const PlayerContainer = () => {
+  const position = 'QB'
+  const players = useAppSelector(selectPlayersWithPosition(position))
+
   return (
     <Box flexGrow={1} height={1} position='relative' width={1}>
       <Paper elevation={3} sx={{ height: 1, position: 'absolute', width: 1 }}>
@@ -30,15 +30,15 @@ const PlayerContainer = (props: Props) => {
             }}
           >
             <Typography component='h6' sx={{ pt: 0.5 }} variant='h6'>
-              {props.data.position}
+              {position}
             </Typography>
             <Divider />
           </Stack>
           <Box flexGrow={1} overflow='hidden' mb={PADDING} position='relative' mt={SPACING} mx={PADDING}>
             <Stack height={1} position='absolute' spacing={SPACING} sx={{ overflowY: 'scroll' }} width={1}>
-              {props.data.players.map((p) => (
-                <Box key={p.rank} position='relative' width={1}>
-                  <PlayerCheckbox player={p} key={p.rank} />
+              {players.map((player) => (
+                <Box key={player.rank} position='relative' width={1}>
+                  <PlayerCheckbox player={player} key={player.rank} />
                 </Box>
               ))}
             </Stack>
