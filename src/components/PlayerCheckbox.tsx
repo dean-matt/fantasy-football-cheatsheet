@@ -1,4 +1,4 @@
-import { Player } from './models'
+import { Player } from '../models'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { useCallback, useState } from 'react'

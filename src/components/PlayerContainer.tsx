@@ -1,7 +1,7 @@
 import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
 import { memo } from 'react'
-import { PlayerPositionCollection } from './models'
+import { PlayerPositionCollection } from '../models'
 import PlayerCheckbox from './PlayerCheckbox'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'

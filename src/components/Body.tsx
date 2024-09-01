@@ -1,11 +1,11 @@
 import PlayerContainer from './PlayerContainer'
 import { memo, useMemo } from 'react'
-import playerData from '../assets/player-data.json'
-import { Player, PlayerPositionCollection } from './models'
+import { PlayerPositionCollection } from '../models'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { Theme } from '@mui/material/styles'
+import { useAppSelector } from '../redux/hooks'
 
 const SPACING = 1
 const DEFAULT_TILES_PER_ROW = 3
@@ -15,7 +15,7 @@ const SMALLEST_TILES_PER_ROW = 1
 const Body = () => {
   const smallestTilePerRow = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
   const mediumTilesPerRow = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
-  const data = playerData as Player[]
+  const players = useAppSelector((s) => s.players.values)
 
   const tilesPerRow = useMemo(() => {
     if (smallestTilePerRow) return SMALLEST_TILES_PER_ROW
@@ -23,10 +23,10 @@ const Body = () => {
     else return DEFAULT_TILES_PER_ROW
   }, [mediumTilesPerRow, smallestTilePerRow])
 
-  const filteredData: PlayerPositionCollection[][] = useMemo(() => {
+  const filteredPlayers: PlayerPositionCollection[][] = useMemo(() => {
     const stage_1: PlayerPositionCollection[] = []
 
-    data.forEach((p) => {
+    players.forEach((p) => {
       const foundCollection = stage_1.find((c) => c.position === p.pos)
 
       if (foundCollection) {
@@ -47,13 +47,13 @@ const Body = () => {
     })
 
     return stage_2
-  }, [data, tilesPerRow])
+  }, [players, tilesPerRow])
 
   return (
     <Box flexBasis={0} flexShrink={0} flexGrow={1} sx={{ position: 'relative' }}>
       <Box sx={{ backgroundColor: 'grey.200', height: 1, p: 1, position: 'absolute', width: 1 }}>
         <Stack height={1} position='relative' spacing={SPACING} width={1}>
-          {filteredData.map((column, index) => {
+          {filteredPlayers.map((column, index) => {
             return (
               <Stack direction='row' flexGrow={1} key={index} spacing={SPACING}>
                 {column.map((data) => (
