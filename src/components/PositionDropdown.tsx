@@ -7,13 +7,13 @@ import { useAppSelector } from '../redux/hooks'
 import { selectPositions } from '../redux/playersSlice'
 
 interface Props {
-  initialValue?: string
+  initialValue: string
   onChange: (position: string) => any
 }
 
 const PositionDropdown = ({ initialValue, onChange }: Props) => {
   const values = useAppSelector(selectPositions)
-  const [value, setValue] = useState(initialValue ?? values[0])
+  const [value, setValue] = useState(initialValue)
 
   const handlePositionChanged = useCallback((event: SelectChangeEvent) => {
     setValue(event.target.value)

@@ -43,7 +43,7 @@ const PlayersBox = ({ initialPosition }: Props) => {
             <Stack height={1} position='absolute' spacing={SPACING} sx={{ overflowY: 'scroll' }} width={1}>
               {players.map((player) => (
                 <Box key={player.rank} position='relative' width={1}>
-                  <PlayerItem player={player} key={player.rank} />
+                  <PlayerItem player={player} />
                 </Box>
               ))}
             </Stack>

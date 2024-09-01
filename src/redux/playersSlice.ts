@@ -50,7 +50,7 @@ export const selectPositions = createSelector([selectPlayers], (players) => {
     positions.push(player.position)
   })
 
-  return positions
+  return positions.sort()
 })
 
 export default playersSlice.reducer
