@@ -4,3 +4,8 @@ export interface Player {
   playerTeamBye: string
   position: string
 }
+
+export interface FilteredPlayers {
+  position: string
+  players?: Player[]
+}

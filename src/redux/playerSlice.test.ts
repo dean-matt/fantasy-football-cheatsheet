@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Player } from '../models'
-import { selectPlayersWithPosition, selectPositions } from './playersSlice'
+import { filterPlayersWithPosition, selectPositions } from './playersSlice'
 
 describe('selectPositions', () => {
   it('should return an array of unique permissions', () => {
@@ -90,17 +90,17 @@ describe('selectPlayersWithPosition', () => {
       K,
     ]
 
-    expect(selectPlayersWithPosition(QB.position)({ players: { values: players } })).toStrictEqual([QB, QB, QB, QB])
-    expect(selectPlayersWithPosition(WR.position)({ players: { values: players } })).toStrictEqual([WR, WR, WR, WR])
-    expect(selectPlayersWithPosition(RB.position)({ players: { values: players } })).toStrictEqual([RB, RB, RB, RB])
-    expect(selectPlayersWithPosition(TE.position)({ players: { values: players } })).toStrictEqual([TE, TE, TE, TE])
-    expect(selectPlayersWithPosition(DST.position)({ players: { values: players } })).toStrictEqual([
+    expect(filterPlayersWithPosition(QB.position)({ players: { values: players } })).toStrictEqual([QB, QB, QB, QB])
+    expect(filterPlayersWithPosition(WR.position)({ players: { values: players } })).toStrictEqual([WR, WR, WR, WR])
+    expect(filterPlayersWithPosition(RB.position)({ players: { values: players } })).toStrictEqual([RB, RB, RB, RB])
+    expect(filterPlayersWithPosition(TE.position)({ players: { values: players } })).toStrictEqual([TE, TE, TE, TE])
+    expect(filterPlayersWithPosition(DST.position)({ players: { values: players } })).toStrictEqual([
       DST,
       DST,
       DST,
       DST,
     ])
-    expect(selectPlayersWithPosition(K.position)({ players: { values: players } })).toStrictEqual([K, K, K, K])
+    expect(filterPlayersWithPosition(K.position)({ players: { values: players } })).toStrictEqual([K, K, K, K])
   })
 
   it('should return no players if there are no matches', () => {
@@ -139,6 +139,6 @@ describe('selectPlayersWithPosition', () => {
       K,
     ]
 
-    expect(selectPlayersWithPosition('MANAGER')({ players: { values: players } })).toStrictEqual([])
+    expect(filterPlayersWithPosition('MANAGER')({ players: { values: players } })).toStrictEqual([])
   })
 })

@@ -41,7 +41,7 @@ const PlayersBox = ({ initialPosition }: Props) => {
           </Stack>
           <Box flexGrow={1} overflow='hidden' mb={PADDING} position='relative' mt={SPACING} mx={PADDING}>
             <Stack height={1} position='absolute' spacing={SPACING} sx={{ overflowY: 'scroll' }} width={1}>
-              {players.map((player) => (
+              {players?.map((player) => (
                 <Box key={player.rank} position='relative' width={1}>
                   <PlayerItem player={player} />
                 </Box>

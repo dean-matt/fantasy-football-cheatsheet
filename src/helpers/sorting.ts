@@ -1,7 +1,11 @@
 import { Player } from '../models'
 
-export const sortPlayers = (players: Player[]) =>
-  players.sort((player1, player2) => {
+export const sortPlayers = (players?: Player[]) => {
+  if (!players) return undefined
+
+  const sorted = [...players]
+
+  sorted.sort((player1, player2) => {
     if (!player1.drafted && player2.drafted) return -1
     else if (player1.drafted && !player2.drafted) return 1
     else {
@@ -11,3 +15,6 @@ export const sortPlayers = (players: Player[]) =>
 
     return 0
   })
+
+  return sorted
+}
