@@ -1,22 +1,18 @@
-import { Menu } from '@mui/icons-material'
 import AppBar from '@mui/material/AppBar'
-import Button from '@mui/material/Button'
-import IconButton from '@mui/material/IconButton'
+import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { memo } from 'react'
 
 const Header = () => {
   return (
-    <AppBar position='static' sx={{ zIndex: 1000 }}>
-      <Toolbar>
-        <IconButton size='large' edge='start' color='inherit' aria-label='menu' sx={{ mr: 2 }}>
-          <Menu />
-        </IconButton>
-        <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-          News
-        </Typography>
-        <Button color='inherit'>High Will!</Button>
+    <AppBar color={'info'} position='static' sx={{ zIndex: 1000 }}>
+      <Toolbar disableGutters variant={'dense'}>
+        <Box flexGrow={1} px={1}>
+          <Typography variant='h6' component='div'>
+            Fantasy Football Cheatsheet
+          </Typography>
+        </Box>
       </Toolbar>
     </AppBar>
   )
