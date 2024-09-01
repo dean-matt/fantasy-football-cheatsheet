@@ -24,6 +24,9 @@ export const playersSlice = createSlice({
 
 export const { setValues } = playersSlice.actions
 
+export const selectPlayersWithPosition = (position: string) => (state: RootState) =>
+  state.players.values.filter((player) => player.pos === position)
+
 export const selectPositions = (state: RootState) => {
   const positions: string[] = []
 
