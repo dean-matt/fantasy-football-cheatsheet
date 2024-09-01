@@ -1,7 +1,8 @@
 export interface Player {
+  drafted: boolean
   rank: number
   playerTeamBye: string
-  pos: string
+  position: string
 }
 
 export interface PlayerPositionCollection {

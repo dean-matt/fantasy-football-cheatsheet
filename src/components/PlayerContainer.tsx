@@ -38,7 +38,7 @@ const PlayerContainer = (props: Props) => {
             <Stack height={1} position='absolute' spacing={SPACING} sx={{ overflowY: 'scroll' }} width={1}>
               {props.data.players.map((p) => (
                 <Box key={p.rank} position='relative' width={1}>
-                  <PlayerCheckbox data={p} key={p.rank} />
+                  <PlayerCheckbox player={p} key={p.rank} />
                 </Box>
               ))}
             </Stack>

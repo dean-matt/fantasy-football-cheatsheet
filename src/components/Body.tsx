@@ -27,12 +27,12 @@ const Body = () => {
     const stage_1: PlayerPositionCollection[] = []
 
     players.forEach((p) => {
-      const foundCollection = stage_1.find((c) => c.position === p.pos)
+      const foundCollection = stage_1.find((c) => c.position === p.position)
 
       if (foundCollection) {
         foundCollection.players.push(p)
       } else {
-        stage_1.push({ players: [p], position: p.pos })
+        stage_1.push({ players: [p], position: p.position })
       }
     })
 
