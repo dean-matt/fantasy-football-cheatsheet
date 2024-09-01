@@ -1,7 +1,7 @@
 import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
 import { memo } from 'react'
-import PlayerCheckbox from './PlayerCheckbox'
+import PlayerItem from './PlayerItem'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
@@ -11,7 +11,7 @@ import { selectPlayersWithPosition } from '../redux/playersSlice'
 const SPACING = 1
 const PADDING = 1
 
-const PlayerContainer = () => {
+const PlayersBox = () => {
   const position = 'QB'
   const players = useAppSelector(selectPlayersWithPosition(position))
 
@@ -38,7 +38,7 @@ const PlayerContainer = () => {
             <Stack height={1} position='absolute' spacing={SPACING} sx={{ overflowY: 'scroll' }} width={1}>
               {players.map((player) => (
                 <Box key={player.rank} position='relative' width={1}>
-                  <PlayerCheckbox player={player} key={player.rank} />
+                  <PlayerItem player={player} key={player.rank} />
                 </Box>
               ))}
             </Stack>
@@ -49,4 +49,4 @@ const PlayerContainer = () => {
   )
 }
 
-export default memo(PlayerContainer)
+export default memo(PlayersBox)

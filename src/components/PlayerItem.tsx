@@ -10,7 +10,7 @@ interface Props {
   player: Player
 }
 
-const PlayerCheckbox = ({ player }: Props) => {
+const PlayerItem = ({ player }: Props) => {
   const dispatch = useAppDispatch()
 
   const handleClick = useCallback(() => {
@@ -38,4 +38,4 @@ const PlayerCheckbox = ({ player }: Props) => {
   )
 }
 
-export default PlayerCheckbox
+export default PlayerItem
