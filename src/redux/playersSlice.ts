@@ -36,7 +36,7 @@ export const { setValues, togglePlayerDrafted } = playersSlice.actions
 
 export const selectValues = (state: RootState) => state.players.values
 
-export const selectPlayersWithPosition = (position?: string) =>
+export const selectPlayersWithPosition = (position: string) =>
   createSelector([selectValues], (values) => {
     if (position) return values[position]
     else return Object.values(values).flat()

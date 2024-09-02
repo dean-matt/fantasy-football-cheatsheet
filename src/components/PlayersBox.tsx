@@ -11,14 +11,14 @@ const SPACING = 0.5
 const PADDING = 1
 
 interface Props {
-  initialPosition?: string
+  initialPosition: string
 }
 
 const PlayersBox = ({ initialPosition }: Props) => {
-  const [position, setPosition] = useState<string | undefined>(initialPosition)
+  const [position, setPosition] = useState<string>(initialPosition)
   const players = useAppSelector(selectPlayersWithPosition(position))
 
-  const handlePositionChanged = useCallback((position?: string) => {
+  const handlePositionChanged = useCallback((position: string) => {
     setPosition(position)
   }, [])
 
