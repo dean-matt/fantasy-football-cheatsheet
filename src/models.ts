@@ -9,3 +9,5 @@ export interface FilteredPlayers {
   position: string
   players?: Player[]
 }
+
+export const getPlayerId = (player: Player) => `${player.rank}_${player.playerTeamBye}`

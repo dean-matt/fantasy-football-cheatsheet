@@ -9,6 +9,7 @@ import playerData from '../assets/player-data.json'
 import { useEffect } from 'react'
 import { useAppDispatch } from '../redux/hooks'
 import { setValues } from '../redux/playersSlice'
+import { sortPlayers } from '../helpers/sorting'
 
 const theme = createTheme({})
 
@@ -16,7 +17,7 @@ const App = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(setValues(playerData))
+    dispatch(setValues(sortPlayers(playerData)))
   }, [dispatch])
 
   return (

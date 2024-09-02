@@ -1,72 +1,53 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from './store'
-import { Player } from '../models'
-import { sortPlayers } from '../helpers/sorting'
+import { getPlayerId, Player } from '../models'
 
 // Define a type for the slice state
 interface PlayersState {
-  filteredValues: { [position: string]: Player[] | undefined }
-  values: Player[]
+  values: { [position: string]: { [id: string]: Player } }
 }
 
 // Define the initial state using that type
 const initialState: PlayersState = {
-  filteredValues: {},
-  values: [],
+  values: {},
 }
 
 export const playersSlice = createSlice({
   name: 'players',
   initialState,
   reducers: {
-    setValues: (state, action: PayloadAction<Player[]>) => {
-      state.values = action.payload
-      state.values = sortPlayers(state.values)!
-
-      const positions = selectPositions({ players: state })
-
-      positions.forEach((position) => {
-        state.filteredValues[position] = sortPlayers(filterPlayersWithPosition(position)({ players: state }))
+    setValues: (state, action: PayloadAction<Player[] | undefined>) => {
+      action.payload?.forEach((player) => {
+        if (!state.values[player.position]) state.values[player.position] = {}
+        state.values[player.position][getPlayerId(player)] = player
       })
     },
     togglePlayerDrafted: (state, action: PayloadAction<Player>) => {
-      const comparer = (p: Player) => p.playerTeamBye === action.payload.playerTeamBye && p.rank === action.payload.rank
+      const player = action.payload
 
-      const player = state.values.find(comparer)
-      const filteredPlayer = state.filteredValues[action.payload.position]?.find(comparer)
-
-      if (player) {
-        player.drafted = !player.drafted
-      }
-
-      if (filteredPlayer) {
-        filteredPlayer.drafted = !filteredPlayer.drafted
+      if (state.values[player.position]?.[getPlayerId(player)]) {
+        state.values[player.position][getPlayerId(player)].drafted = !player.drafted
       }
     },
   },
 })
 
-export const { togglePlayerDrafted, setValues } = playersSlice.actions
+export const { setValues, togglePlayerDrafted } = playersSlice.actions
 
-export const selectPlayers = (state: RootState) => state.players.values
+export const selectValues = (state: RootState) => state.players.values
 
-export const selectFilteredPlayers = (state: RootState) => state.players.filteredValues
-
-const filterPlayersWithPosition = (position: string) =>
-  createSelector([selectPlayers], (players) => {
-    return players.filter((player) => player.position === position)
+export const selectPlayersWithPosition = (position?: string) =>
+  createSelector([selectValues], (values) => {
+    if (position) return values[position]
+    else return Object.values(values).flat()
   })
 
-export const selectPlayersWithPosition = (position: string) =>
-  createSelector([selectFilteredPlayers], (filteredPlayers) => filteredPlayers[position])
+export const selectPositions = createSelector([selectValues], (values) => {
+  let positions: string[] = []
 
-export const selectPositions = createSelector([selectPlayers], (players) => {
-  const positions: string[] = []
-
-  players.forEach((player) => {
-    if (positions.find((value) => value === player.position)) return
-    positions.push(player.position)
-  })
+  if (values) {
+    positions = Object.keys(values)
+  }
 
   return positions.sort((a, b) => b.localeCompare(a))
 })
