@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { Player } from '../models'
+import { getPlayerId } from '../models'
 import { selectPlayersWithPosition, selectPositions } from './playersSlice'
 
 describe('selectPositions', () => {
@@ -11,34 +11,18 @@ describe('selectPositions', () => {
     const DST = { playerTeamBye: '', position: 'DST', rank: 0 }
     const K = { playerTeamBye: '', position: 'K', rank: 0 }
 
-    const players: Player[] = [
-      QB,
-      QB,
-      QB,
-      WR,
-      WR,
-      WR,
-      RB,
-      RB,
-      RB,
-      TE,
-      TE,
-      TE,
-      DST,
-      DST,
-      DST,
-      K,
-      K,
-      K,
-      QB,
-      WR,
-      RB,
-      TE,
-      DST,
-      K,
-    ]
-
-    const positions = selectPositions({ players: { filteredValues: {}, values: players } })
+    const positions = selectPositions({
+      players: {
+        values: {
+          [QB.position]: {},
+          [WR.position]: {},
+          [RB.position]: {},
+          [TE.position]: {},
+          [DST.position]: {},
+          [K.position]: {},
+        },
+      },
+    })
 
     expect(positions).toHaveLength(6)
     expect(positions).toContain(QB.position)
@@ -50,7 +34,7 @@ describe('selectPositions', () => {
   })
 
   it('should return an empty array if no positions found', () => {
-    expect(selectPositions({ players: { filteredValues: {}, values: [] } })).toStrictEqual([])
+    expect(selectPositions({ players: { values: {} } })).toStrictEqual([])
   })
 })
 
@@ -63,44 +47,61 @@ describe('selectPlayersWithPosition', () => {
     const DST = { playerTeamBye: 'gary', position: 'DST', rank: 0 }
     const K = { playerTeamBye: 'dave', position: 'K', rank: 0 }
 
-    // There is 4 of each player here
-    const playersQB: Player[] = [QB, QB, QB, QB]
-    const playersWR: Player[] = [WR, WR, WR, WR]
-    const playersRB: Player[] = [RB, RB, RB, RB]
-    const playersTE: Player[] = [TE, TE, TE, TE]
-    const playersDST: Player[] = [DST, DST, DST, DST]
-    const playersK: Player[] = [K, K, K, K]
+    const allPlayers = {
+      [QB.position]: {
+        [getPlayerId(QB)]: QB,
+        [getPlayerId(QB)]: QB,
+        [getPlayerId(QB)]: QB,
+        [getPlayerId(QB)]: QB,
+      },
+      [WR.position]: {
+        [getPlayerId(WR)]: WR,
+        [getPlayerId(WR)]: WR,
+        [getPlayerId(WR)]: WR,
+        [getPlayerId(WR)]: WR,
+      },
+      [RB.position]: {
+        [getPlayerId(RB)]: RB,
+        [getPlayerId(RB)]: RB,
+        [getPlayerId(RB)]: RB,
+        [getPlayerId(RB)]: RB,
+      },
+      [TE.position]: {
+        [getPlayerId(TE)]: TE,
+        [getPlayerId(TE)]: TE,
+        [getPlayerId(TE)]: TE,
+        [getPlayerId(TE)]: TE,
+      },
+      [DST.position]: {
+        [getPlayerId(DST)]: DST,
+        [getPlayerId(DST)]: DST,
+        [getPlayerId(DST)]: DST,
+        [getPlayerId(DST)]: DST,
+      },
+      [K.position]: {
+        [getPlayerId(K)]: K,
+        [getPlayerId(K)]: K,
+        [getPlayerId(K)]: K,
+        [getPlayerId(K)]: K,
+      },
+    }
 
     expect(
-      selectPlayersWithPosition(QB.position)({ players: { filteredValues: { [QB.position]: playersQB }, values: [] } })
-    ).toStrictEqual([QB, QB, QB, QB])
-    expect(
-      selectPlayersWithPosition(WR.position)({ players: { filteredValues: { [WR.position]: playersWR }, values: [] } })
-    ).toStrictEqual([WR, WR, WR, WR])
-    expect(
-      selectPlayersWithPosition(RB.position)({ players: { filteredValues: { [RB.position]: playersRB }, values: [] } })
-    ).toStrictEqual([RB, RB, RB, RB])
-    expect(
-      selectPlayersWithPosition(TE.position)({ players: { filteredValues: { [TE.position]: playersTE }, values: [] } })
-    ).toStrictEqual([TE, TE, TE, TE])
-    expect(
-      selectPlayersWithPosition(DST.position)({
-        players: { filteredValues: { [DST.position]: playersDST }, values: [] },
+      selectPlayersWithPosition(QB.position)({
+        players: {
+          values: {
+            [QB.position]: allPlayers[QB.position],
+          },
+        },
       })
-    ).toStrictEqual([DST, DST, DST, DST])
-    expect(
-      selectPlayersWithPosition(K.position)({ players: { filteredValues: { [K.position]: playersK }, values: [] } })
-    ).toStrictEqual([K, K, K, K])
+    ).toStrictEqual(allPlayers[QB.position])
   })
 
   it('should return no players if there are no matches', () => {
     const QB = { playerTeamBye: 'mike', position: 'QB', rank: 0 }
 
-    // There is 4 of each player here
-    const players: Player[] = [QB]
-
     expect(
-      selectPlayersWithPosition('MANAGER')({ players: { filteredValues: { [QB.position]: players }, values: [] } })
+      selectPlayersWithPosition('MANAGER')({ players: { values: { [QB.position]: { [getPlayerId(QB)]: QB } } } })
     ).toEqual(undefined)
   })
 })
